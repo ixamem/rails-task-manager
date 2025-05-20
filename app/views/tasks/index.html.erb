@@ -1,0 +1,42 @@
+<h1 class="mb-4">My tasks</h1>
+
+<ul class="list-group">
+  <% @tasks.each do |task| %>
+    <li class="list-group-item d-flex align-items-center">
+      <div class="form-check me-auto">
+        <!-- Case à cocher désactivée -->
+        <%= check_box_tag "task_#{task.id}_completed",
+                          "",
+                          task.completed?,
+                          disabled: true,
+                          class: "form-check-input",
+                          id: "task_#{task.id}_completed" %>
+
+        <!-- Label qui barre le texte si task.completed? -->
+        <%= label_tag "task_#{task.id}_completed", class: [
+              "form-check-label",
+              ("text-decoration-line-through text-muted" if task.completed?)
+            ].compact.join(" ") do %>
+          <%= link_to task.title, task_path(task), class: "text-reset" %>
+        <% end %>
+      </div>
+
+      <!-- Actions Éditer / Supprimer -->
+      <%= link_to edit_task_path(task),
+                  class: "btn btn-sm btn-outline-primary me-2",
+                  title: "Edit" do %>
+        <i class="fas fa-edit"></i>
+      <% end %>
+
+      <%= link_to task_path(task),
+                  method: :delete,
+                  data: { confirm: "Vraiment supprimer ?" },
+                  class: "btn btn-sm btn-outline-danger",
+                  title: "Delete" do %>
+        <i class="fas fa-trash"></i>
+      <% end %>
+    </li>
+  <% end %>
+</ul>
+
+<%= link_to "➕ Add a new task", new_task_path, class: "btn btn-success mt-4" %>

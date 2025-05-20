@@ -1,0 +1,32 @@
+
+<!-- app/views/tasks/edit.html.erb -->
+<div class="container mt-5">
+  <div class="card">
+    <div class="card-header">
+      <h2>Modifier la tâche</h2>
+    </div>
+    <div class="card-body">
+      <%= form_with model: @task, url: task_path(@task), local: true do |f| %>
+        <div class="mb-3">
+          <%= f.label :title, "Titre", class: "form-label" %>
+          <%= f.text_field :title, class: "form-control" %>
+        </div>
+
+        <div class="mb-3">
+          <%= f.label :details, "Détails", class: "form-label" %>
+          <%= f.text_area :details, class: "form-control", rows: 5 %>
+        </div>
+
+        <div class="form-check mb-3">
+          <%= f.check_box :completed, class: "form-check-input", id: "task_completed" %>
+          <%= f.label :completed, "Terminée ?", class: "form-check-label", for: "task_completed" %>
+        </div>
+
+        <div class="d-flex justify-content-between">
+          <%= f.submit "Mettre à jour", class: "btn btn-primary" %>
+          <%= link_to "Annuler", task_path(@task), class: "btn btn-outline-secondary" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
